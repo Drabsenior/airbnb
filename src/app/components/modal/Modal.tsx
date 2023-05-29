@@ -168,10 +168,10 @@ const Modal: React.FC<ModalItemProps> = ({
             <div
               className="
               flex
-              flex-row
-              items-center
+              flex-col
               gap-2
-              p-6
+              p-4
+              w-full
             "
             >
               <div
@@ -179,7 +179,7 @@ const Modal: React.FC<ModalItemProps> = ({
                 flex
                 flex-row
                 items-center
-                gap-4
+                gap-2
                 w-full
               "
               >
@@ -197,6 +197,7 @@ const Modal: React.FC<ModalItemProps> = ({
                   onClick={handleSubmit}
                 />
               </div>
+              {footer}
             </div>
           </div>
         </div>

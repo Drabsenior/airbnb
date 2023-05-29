@@ -1,38 +1,50 @@
-'use client'
-import Container from "../Container"
-import Logo from "./Logo"
-import Search from "./Search"
-import UserMenu from "./UserMenu"
+"use client";
+import { SafeUser } from "@/app/types";
+import Container from "../Container";
+import Logo from "./Logo";
+import Search from "./Search";
+import UserMenu from "./UserMenu";
 
-const Navbar = () => {
+interface NavbarProps {
+  currentUser?: SafeUser | null;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
+  console.log(currentUser);
   return (
-    <div className="
+    <div
+      className="
     fixed
     w-full
     shadow-sm
     bg-white
-    ">
-      <div className="
+    "
+    >
+      <div
+        className="
       py-4
       border-b-[1px]
-      ">
-       <Container>
-        <div className="
+      "
+      >
+        <Container>
+          <div
+            className="
          flex
          flex-row
          items-center
          justify-between
          gap-3
          md:gap-0
-        ">
-        <Logo/>
-        <Search/>
-        <UserMenu/>
-        </div>
-       </Container>
+        "
+          >
+            <Logo />
+            <Search />
+            <UserMenu currentUser={currentUser} />
+          </div>
+        </Container>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
