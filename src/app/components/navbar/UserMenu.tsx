@@ -7,6 +7,7 @@ import useRegisterModal from "@/app/hooks/userRegisterModal";
 import userLoginModal from "@/app/hooks/userLoginModal";
 import { signOut } from "next-auth/react";
 import { SafeUser } from "@/app/types";
+import { log } from "console";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
@@ -19,6 +20,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
+
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    //else open onrent
+  }, [currentUser, loginModal]);
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -59,7 +68,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src={currentUser?.iamge} />
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>

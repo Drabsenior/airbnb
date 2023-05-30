@@ -1,11 +1,14 @@
 "use client";
-import axios from "axios";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+
+import axios from "axios";
 import { useCallback, useState } from "react";
-import useRegisterModal from "@/app/hooks/userRegisterModal";
 import { toast } from "react-hot-toast";
+
+import useRegisterModal from "@/app/hooks/userRegisterModal";
+import userLoginModal from "@/app/hooks/userLoginModal";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
@@ -14,6 +17,7 @@ import Button from "../Button";
 import { signIn } from "next-auth/react";
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
+  const loginModal = userLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -41,6 +45,10 @@ const RegisterModal = () => {
         setIsLoading(false);
       });
   };
+  const toggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal]);
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Welcome to Airbnb" subtitle="Create an account!" />
@@ -75,7 +83,7 @@ const RegisterModal = () => {
         outline
         label="Coutinue with Google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
@@ -88,7 +96,7 @@ const RegisterModal = () => {
           <div>Aleady have an account?</div>
           <div
             className="text-neutral-800 cursor-pointer hover:underline  "
-            onClick={registerModal.onClose}
+            onClick={toggle}
           >
             Log in
           </div>
