@@ -1,9 +1,12 @@
 import getCurrentUser from "./actions/getCurrentUser";
-import LoginModal from "./components/modal/LoginModal";
-import Modal from "./components/modal/Modal";
-import RegisterModal from "./components/modal/RegisterModal";
+
 import Navbar from "./components/navbar/Navbar";
 import ToasterProvider from "./components/providers/ToasterProvider";
+
+import LoginModal from "./components/modal/LoginModal";
+import RegisterModal from "./components/modal/RegisterModal";
+import RentModal from "./components/modal/RentModal";
+
 import "./globals.css";
 import { Nunito } from "next/font/google";
 
@@ -23,8 +26,8 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        {/* <Modal isOpen title="hellow world" actionLabel="Submit" /> */}
         <ToasterProvider />
+        <RentModal />
         <RegisterModal />
         <LoginModal />
         <Navbar currentUser={currentUser} />
