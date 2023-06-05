@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import userLoginModal from "./userLoginModal";
 import { useCallback, useMemo } from "react";
 import { toast } from "react-hot-toast";
+import { list } from "postcss";
 
 
 interface IUseFavorite{
@@ -20,10 +21,10 @@ const useFavorite = ({listingId,currentUser}:IUseFavorite)=>{
         const list = currentUser?.favoriteIds || []
 
         return list.includes(listingId)
-    },[loginModal,listingId])
+    },[loginModal,listingId,list])
 
-    const toggleFavorite = useCallback(async(e:React.MouseEvent<HTMLDivElement>)=>{
-        e.stopPropagation()
+ const toggleFavorite = useCallback(async(e:React.MouseEvent<HTMLDivElement>)=>{
+        e.stopPropagation() 
 
         if(!currentUser){
             return loginModal.onOpen()
@@ -39,12 +40,14 @@ const useFavorite = ({listingId,currentUser}:IUseFavorite)=>{
             await request()
             router.refresh()
             toast.success('Success')
+           
 
         } catch (error) {
             toast.error('something went wrong')
         }
 
-    },[currentUser,listingId,hasFavorited,loginModal,router])
+
+    },[hasFavorited,currentUser,listingId,loginModal,router])
 
     return {
         hasFavorited,
