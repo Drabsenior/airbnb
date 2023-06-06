@@ -30,6 +30,7 @@ const useFavorite = ({listingId,currentUser}:IUseFavorite)=>{
             return loginModal.onOpen()
         }
         try {
+            
             let request
             if(hasFavorited){
                 request =()=> axios.delete(`/api/favorites/${listingId}`)
@@ -41,7 +42,6 @@ const useFavorite = ({listingId,currentUser}:IUseFavorite)=>{
             router.refresh()
             toast.success('Success')
            
-
         } catch (error) {
             toast.error('something went wrong')
         }
