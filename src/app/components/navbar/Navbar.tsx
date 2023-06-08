@@ -19,6 +19,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     w-full
     shadow-sm
     bg-white
+    z-10
     "
     >
       <div
