@@ -4,7 +4,6 @@ import Container from "@/app/components/Container";
 import ListingHead from "@/app/components/listing/ListingHead";
 import { categories } from "@/app/components/navbar/Categories";
 import { SafeListing, SafeUser } from "@/app/types";
-import { Reservation } from "@prisma/client";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ListingInfo from "./ListingInfo";
 import userLoginModal from "@/app/hooks/userLoginModal";
@@ -13,6 +12,8 @@ import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import ListingReservation from "@/app/components/listing/ListingReservation";
+import { Range } from "react-date-range";
+import { Reservation } from "@prisma/client";
 
 const intialDateRange = {
   startDate: new Date(),
@@ -50,19 +51,26 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(listing.price);
-  const [dateRange, setDateRange] = useState(intialDateRange);
+  const [dateRange, setDateRange] = useState<Range>(intialDateRange);
 
   const onCreateReservation = useCallback(() => {
     if (!currentUser) {
       return loginModal.onOpen();
     }
     setIsLoading(true);
+    console.log(
+      totalPrice,
+      typeof dateRange.startDate,
+      dateRange.endDate,
+      dateRange
+    );
 
     axios
       .post(`/api/reservations`, {
+        listingId: listing.id,
         totalPrice,
-        startDate: dateRange.startDate,
-        endDate: dateRange.endDate,
+        startDate: dateRange?.startDate,
+        endDate: dateRange?.endDate,
       })
       .then(() => {
         toast.success("Listing reserved");
@@ -71,8 +79,10 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
         router.refresh();
       })
-      .catch(() => {
+      .catch((error: Error | any) => {
         toast.error("Somthing went worng!");
+        console.log(error);
+        console.log("invalid shit happen");
       })
       .finally(() => {
         setIsLoading(false);

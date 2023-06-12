@@ -36,9 +36,9 @@ export async function POST (request:Request){
             description,
             imageSrc,
             category,
-            roomCount:roomCount.toString(),
-            bathroomCount:bathroomCount.toString(),
-            guestCount:guestCount.toString(),
+            roomCount,
+            bathroomCount,
+            guestCount,
             locationValue:location.value,
             price:parseInt(price,10),
             userId:currentUser.id
