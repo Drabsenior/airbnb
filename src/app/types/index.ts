@@ -10,17 +10,16 @@ export type SafeListing = Omit<
         guestCount:string
     }
 
-// export type SafeReservation = Omit<
-//     Reservation,
-//     'createdAt' | 'updatedAt' | 'emailVerified' | 'roomCount' | 'bathroomCount' | 'guestCount'
-//     > & {
-//         createdAt:string,
-//         updatedAt:string,
-//         emailVerified:string,
-//         roomCount:string,
-//         bathroomCount:string,
-//         guestCount:string
-//     }
+export type SafeReservation = Omit<
+    Reservation,
+    'createdAt' | 'startDate' | 'endDate' | 'listing' 
+    > & {
+        createdAt:string,
+        startDate:string,
+        endDate:string,
+        listings:SafeListing
+        
+    }
 export type SafeUser = Omit<
     User,
     'createdAt'|'updatedAt'|'emailVerified'

@@ -3,7 +3,7 @@
 import Container from "@/app/components/Container";
 import ListingHead from "@/app/components/listing/ListingHead";
 import { categories } from "@/app/components/navbar/Categories";
-import { SafeListing, SafeUser } from "@/app/types";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ListingInfo from "./ListingInfo";
 import userLoginModal from "@/app/hooks/userLoginModal";
@@ -13,7 +13,6 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import ListingReservation from "@/app/components/listing/ListingReservation";
 import { Range } from "react-date-range";
-import { Reservation } from "@prisma/client";
 
 const intialDateRange = {
   startDate: new Date(),
@@ -22,7 +21,7 @@ const intialDateRange = {
 };
 
 interface ListingClientProps {
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
   listing: SafeListing & {
     user: SafeUser;
   };
@@ -77,7 +76,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         setDateRange(intialDateRange);
         //redirect to /trips
 
-        router.refresh();
+        router.push("/trips");
       })
       .catch((error: Error | any) => {
         toast.error("Somthing went worng!");
